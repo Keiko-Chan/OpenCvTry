@@ -7,7 +7,7 @@ W = 10     		# window size is WxW (kernel)
 C_Thr = 0.43    	# threshold for coherency
 LowThr = 30   		# threshold1 for orientation, it ranges from 0 to 180
 HighThr = 60   	# threshold2 for orientation, it ranges from 0 to 180
-line = 15
+line = 20
 
 def first_filt(inIMG, filterSize):
 	kernel = cv.getStructuringElement(cv.MORPH_RECT, filterSize)
@@ -67,7 +67,10 @@ def paint_lines(filtIMG, leng, orientationIMG, inIMG):
 			
 				end_point = (int(line * sin) + j, int(line * cos) + i)
 			
-				color = (0, 0, 0)
+				color = inIMG.item(i, j)
+				if color > 200 :
+					color = 200
+				
 				thickness = 1
 				if j + line < filtIMG.shape[1] and i + line < filtIMG.shape[0] : 
 					inIMG = cv.line(inIMG, start_point, end_point, color, thickness)
